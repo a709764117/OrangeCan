@@ -12,5 +12,11 @@ Page({
     this.setData({
       postList: dbPost.getAllPostData()
     })
+  },
+  onTapToDetail(event){
+    var postId = event.currentTarget.dataset.postId;
+    wx.navigateTo({
+      url: 'post-detail/post-detail?id='+ postId,
+    })
   }
 })
