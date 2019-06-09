@@ -45,9 +45,18 @@ Page({
       icon:"success",
       mask:true
     })
-
+  },
+    onUpTap:function(event){
+    var newData = this.dbPost.up()
+    this.setData({
+      'post.upNum' : newData.upNum,
+      'post.upStatus': newData.upStatus
+      })
+  },
+  onCommentTap: function (event){
+    this.dbPost.postId = event.currentTarget.dataset.postId;
+    wx.navigateTo({
+      url: '../post/post-comment/post-comment?id=' + this.dbPost.postId,
+    })
   }
-
-
-
 })

@@ -4,6 +4,11 @@ class DBPost {
     this.postId = postId;
   }
 
+  //本地缓存 保存/更新
+  execSetStorageSync(data) {
+    wx.setStorageSync(this.storageKeyName, data)
+  }
+
   //得到全部文章信息
   getAllPostData() {
     var res = wx.getStorageSync(this.storageKeyName)
@@ -45,6 +50,17 @@ class DBPost {
           postData.collectionStatus = false
         }
         break;
+      case 'up':
+        if (!postData.upStatus){
+          //如果当前状态是未点赞
+          postData.upNum++;
+          postData.upStatus = true;
+        }else{
+          //如果当前状态是已点赞
+          postData.upNum--;
+          postData.upStatus = false;
+        }
+        break;
       default:
         break;
     }
@@ -60,9 +76,36 @@ class DBPost {
     return this.updatePostData('collect');
   }
 
-  //本地缓存 保存/更新
-  execSetStorageSync(data) {
-    wx.setStorageSync(this.storageKeyName, data)
+  //点赞文章
+  up(){
+    return this.updatePostData('up');  
+  }
+
+  //获取文章的评论数据
+  getCommentData(){
+    var itemPost = getPostItemById().data;
+
+    //评论按照最新时间排序，降序
+    itemPost.comments.sort(this.compareWithTime);
+    var len = itemPost.data.comments.length,
+        comment;
+    for(var i = 0;i<len;i++){
+      comment = itemPost.comments[i];
+      comment.create_time = util.getDiffTime(comment.create_time,true);
+    }
+    
+    return itemPost.comments
+  }
+
+  compareWithTime(value1,value2){
+    var flag = parseFloat(value1.create_time) - parseFloat(value2.create_time)
+    if(flag > 0){
+      return -1;
+    }else if(flag == 0){
+      return 0;
+    }else if(flag < 0){
+      return 1;
+    }
   }
 
 };
