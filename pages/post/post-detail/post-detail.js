@@ -56,7 +56,7 @@ Page({
   onCommentTap: function (event){
     this.dbPost.postId = event.currentTarget.dataset.postId;
     wx.navigateTo({
-      url: '../post/post-comment/post-comment?id=' + this.dbPost.postId,
+      url: '../post-comment/post-comment?id=' + this.dbPost.postId,
     })
   }
 })

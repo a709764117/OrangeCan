@@ -1,3 +1,5 @@
+var util = require('../util/util.js');
+
 class DBPost {
   constructor(postId) {
     this.storageKeyName = "postList"; //所有的文章本地缓存存储键值
@@ -33,7 +35,7 @@ class DBPost {
   }
 
   //更新本地的点赞，评论信息、收藏、阅读量
-  updatePostData(category){
+  updatePostData(category,newComment){
     var postItem = this.getPostItemById(),
         postData = postItem.data,
         allPostData = this.getAllPostData();
@@ -61,6 +63,10 @@ class DBPost {
           postData.upStatus = false;
         }
         break;
+      case 'comment':
+        postData.comments.push(newComment);
+        postData.commentNum++;
+        break;
       default:
         break;
     }
@@ -83,11 +89,11 @@ class DBPost {
 
   //获取文章的评论数据
   getCommentData(){
-    var itemPost = getPostItemById().data;
+    var itemPost = this.getPostItemById().data;
 
     //评论按照最新时间排序，降序
     itemPost.comments.sort(this.compareWithTime);
-    var len = itemPost.data.comments.length,
+    var len = itemPost.comments.length,
         comment;
     for(var i = 0;i<len;i++){
       comment = itemPost.comments[i];
@@ -106,6 +112,10 @@ class DBPost {
     }else if(flag < 0){
       return 1;
     }
+  }
+
+  newComment(newComment){
+    this.updatePostData('comment',newComment);
   }
 
 };
