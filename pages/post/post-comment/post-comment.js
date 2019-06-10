@@ -8,6 +8,8 @@ Page({
    */
   data: {
     useKeyboardFlag:true,
+    keyboardInputValue:'',
+    sendMoreMsgFlag:false
   },
 
   /**
@@ -99,6 +101,11 @@ Page({
     this.setData({
       keyboardInputValue:''
     });
+  },
+  sendMoreMsg:function(){
+    this.setData({
+      sendMoreMsgFlag:!this.data.sendMoreMsgFlag
+    })
   }
 
 
