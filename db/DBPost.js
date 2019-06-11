@@ -67,6 +67,9 @@ class DBPost {
         postData.comments.push(newComment);
         postData.commentNum++;
         break;
+      case 'reading':
+        postData.readingNum ++;
+        break;
       default:
         break;
     }
@@ -116,6 +119,10 @@ class DBPost {
 
   newComment(newComment){
     this.updatePostData('comment',newComment);
+  }
+
+  addReadingTimes(){
+    this.updatePostData('reading');
   }
 
 };

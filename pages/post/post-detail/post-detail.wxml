@@ -1,6 +1,7 @@
 <!--pages/post/post-detail/post-detail.wxml-->
 <view class="container">
   <image class="head-image" src="{{post.postImg}}"></image>
+  <image catchtap="onMusicTap" class="music">
   <text class="title">{{post.title}}</text>
   <view class="author-date">
     <view class="author-box">

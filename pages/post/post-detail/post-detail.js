@@ -19,6 +19,7 @@ Page({
     this.setData({
       post:this.postData
     })
+    this.addReadingTimes()
   },
 
   /**
@@ -58,5 +59,8 @@ Page({
     wx.navigateTo({
       url: '../post-comment/post-comment?id=' + this.dbPost.postId,
     })
+  },
+  addReadingTimes:function(){
+    this.dbPost.addReadingTimes();
   }
 })
