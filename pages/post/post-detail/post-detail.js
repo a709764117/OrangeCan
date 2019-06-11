@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //控制音乐播放状态
+    isPlayingMusic: false
   },
 
   /**
@@ -19,7 +21,8 @@ Page({
     this.setData({
       post:this.postData
     })
-    this.addReadingTimes()
+    this.addReadingTimes();
+    this.setMusicMonitor();
   },
 
   /**
@@ -28,6 +31,12 @@ Page({
   onReady: function () {
     wx.setNavigationBarTitle({
       title: this.postData.title
+    })
+  },
+  onUnload: function() {
+    wx.stopBackgroundAudio()
+    this.setData({
+      isPlayingMusic: false
     })
   },
 
@@ -62,5 +71,31 @@ Page({
   },
   addReadingTimes:function(){
     this.dbPost.addReadingTimes();
+  },
+  onMusicTap:function(){
+    if (this.data.isPlayingMusic){
+      wx.pauseBackgroundAudio()
+      this.setData({
+        isPlayingMusic: false
+      })
+      
+    }else{
+      wx.playBackgroundAudio({
+        dataUrl: this.postData.music.url,
+        title:this.postData.music.title,
+        coverImgUrl:this.postData.music.coverImg
+      })
+      this.setData({
+        isPlayingMusic: true
+      })
+    }
+  },
+  setMusicMonitor:function(){
+    var that = this;
+    wx.onBackgroundAudioStop(function(){
+      that.setData({
+        isPlayingMusic:false
+      })
+    });
   }
 })
