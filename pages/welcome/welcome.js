@@ -1,6 +1,6 @@
 Page({
   onTapJump:function(){
-    wx.redirectTo({
+    wx.switchTab({
       url: '../post/post',
       success: function(res) {},
       fail: function(res) {},
@@ -9,7 +9,7 @@ Page({
   },
   onTapClear:function(){
     wx.clearStorage()
-    wx.redirectTo({
+    wx.switchTab({
       url: '../post/post',
       success: function (res) { },
       fail: function (res) { },
