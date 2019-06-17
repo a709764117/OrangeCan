@@ -63,6 +63,7 @@ Page({
         coverageUrl:subject.images.large,
         movieId:subject.id
       }
+     // console.log(temp.title, temp.stars + " && " + subject.rating.stars)
       movies.push(temp)
     }
     var readyData = {};
